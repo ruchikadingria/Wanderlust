@@ -34,12 +34,26 @@ app.get("/Listings", async (req,res) => {
     res.render("listings/index", {allListings});
 });
 
+
+//New Route
+app.get("/Listings/new", (req,res) =>{
+    res.render("listings/new");
+})
+
+
 //Read: Show Route
 app.get("/Listings/:id", async (req, res) => { 
     let {id} = req.params;
     const listing = await Listing.findById(id); 
     res.render("listings/show", {listing});
 });
+
+//Create Route
+app.post("/listings", async (req,res)=>{
+    const newListing = new Listing( req.body.Listing);
+    await newListing.save();
+    res.redirect("/listings");
+})
 
 // app.get("/testListing", async (req, res) => {
 //     let sampleListing = new Listing({
